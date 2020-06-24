@@ -9,11 +9,8 @@ def startOneTime(path, clean, openF):
 
     if os.path.isdir(path):
         try:
-            if path[-1] != "\\" and os.name == "nt":
-                path = path + "\\"
-
-            if path[-1] != "/" and os.name != "nt":
-                path = path + "/"
+            if path[-1] != os.sep:
+                path += os.sep
 
             data = db(db="db_general.json")
 
