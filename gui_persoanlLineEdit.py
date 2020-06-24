@@ -1,10 +1,11 @@
-from PyQt5.QtWidgets import (QLineEdit, QWidget, 
-    QLineEdit, QApplication)
-import sys, os
+import os
+
+from PyQt5.QtWidgets import (QLineEdit)
+
 
 class LineEdit(QLineEdit):
     def __init__(self, parent):
-        super().__init__(parent)        
+        super().__init__(parent)
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, e):
@@ -17,7 +18,7 @@ class LineEdit(QLineEdit):
         text = e.mimeData().text()
         text = text.replace("file:///", "")
 
-        if os.name == "nt":       
+        if os.name == "nt":
             text = text.replace("/", "\\")
-        
-        self.setText(text) 
+
+        self.setText(text)

@@ -1,28 +1,22 @@
 import sys
-import time
-import _thread
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QCoreApplication, QDir, QSize, Qt, pyqtSlot
+
+from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLabel,
-                             QLineEdit, QListWidget, QListWidgetItem,
-                             QMainWindow, QMenu, QPushButton, QSystemTrayIcon,
-                             QVBoxLayout, QWidget, QListWidget, QAction,
-                             QErrorMessage, QMessageBox,
-                             QFileDialog)
+from PyQt5.QtWidgets import (QMenu)
 
 import gui_aboutme
+import gui_cleanOneTime
 import gui_debug
 import gui_settings
-import gui_cleanOneTime
+
 
 class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     def __init__(self, icon, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
-        self.menu = QMenu(parent)    
+        self.menu = QMenu(parent)
         self.icon = icon
-    
+
     def set_data(self, data):
         self.data = data
 
@@ -33,19 +27,19 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
         settingAction = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "settings"))
         settingAction.triggered.connect(self.settings)
-        
+
         cleanOneTime = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon"))
         cleanOneTime.triggered.connect(self.cleanOneTime)
 
         self.pause = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "pause"))
         self.pause.triggered.connect(self.set_pause)
-        
+
         aboutme = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "aboutme"))
         aboutme.triggered.connect(self.aboutme)
-        
+
         exitAction = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "exit"))
         exitAction.triggered.connect(self.exit)
-        
+
         self.setContextMenu(self.menu)
 
     def set_pause(self):
@@ -62,28 +56,29 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.window.set_data(self.data)
         self.window.initUI()
         self.window.show()
-        
+
     def settings(self):
         self.window = gui_settings.Settings(self.icon)
         self.window.set_data(self.data)
         self.window.initUI()
         self.window.set_main(self)
         self.window.show()
-    
+
     def cleanOneTime(self):
         self.window = gui_cleanOneTime.clean(self.icon)
         self.window.set_data(self.data)
         self.window.initUI()
         self.window.show()
-        
+
     def aboutme(self):
         self.window = gui_aboutme.AboutMe(self.icon)
         self.window.set_data(self.data)
         self.window.initUI()
         self.window.show()
-        
+
     def exit(self):
         sys.exit()
+
 
 def main(image, data):
     app = QtWidgets.QApplication(sys.argv)
@@ -93,4 +88,3 @@ def main(image, data):
     trayIcon.set_menu()
     trayIcon.show()
     sys.exit(app.exec_())
-    

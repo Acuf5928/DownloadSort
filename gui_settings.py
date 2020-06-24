@@ -1,16 +1,11 @@
-import sys
 import time
-import _thread
+
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import (QHBoxLayout, QLabel,
+                             QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QErrorMessage, QMessageBox)
+
 import code_data
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QCoreApplication, QDir, QSize, Qt, pyqtSlot
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLabel,
-                             QLineEdit, QListWidget, QListWidgetItem,
-                             QMainWindow, QMenu, QPushButton, QSystemTrayIcon,
-                             QVBoxLayout, QWidget, QListWidget, QAction,
-                             QErrorMessage, QMessageBox,
-                             QFileDialog)
+
 
 class Settings(QMainWindow):
     def __init__(self, icon):
@@ -23,15 +18,15 @@ class Settings(QMainWindow):
     def initUI(self):
         self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
 
-        #Creo i diversi layout
+        # Creo i diversi layout
         myQWidget = QWidget()
         self.setCentralWidget(myQWidget)
 
         VerticalLayoutA = QVBoxLayout()
         HorizontalLayoutA = QHBoxLayout()
         VerticalLayoutBS = QVBoxLayout()
-        
-        #Creo i campi di testo
+
+        # Creo i campi di testo
         self.text1 = QLabel("DownloadFolderPath: ", self)
         self.text2 = QLabel("order_cycle_wait_time: ", self)
         self.text4 = QLabel("clean_folder_path: ", self)
@@ -47,10 +42,10 @@ class Settings(QMainWindow):
         VerticalLayoutBS.addWidget(self.text6)
         VerticalLayoutBS.addWidget(self.text7)
         VerticalLayoutBS.addWidget(self.text9)
-        VerticalLayoutBS.addWidget(self.text14)  
-        
+        VerticalLayoutBS.addWidget(self.text14)
+
         VerticalLayoutBD = QVBoxLayout()
-        #Creo i campi da riempire
+        # Creo i campi da riempire
         self.textbox1 = QLineEdit()
         self.textbox2 = QLineEdit()
         self.textbox4 = QLineEdit()
@@ -66,13 +61,13 @@ class Settings(QMainWindow):
         VerticalLayoutBD.addWidget(self.textbox6)
         VerticalLayoutBD.addWidget(self.textbox7)
         VerticalLayoutBD.addWidget(self.textbox9)
-        VerticalLayoutBD.addWidget(self.textbox14)  
-        
+        VerticalLayoutBD.addWidget(self.textbox14)
+
         HorizontalLayoutA.addLayout(VerticalLayoutBS)
         HorizontalLayoutA.addLayout(VerticalLayoutBD)
-        
+
         self.textAllert = QLabel(self.data.language_class.r_string(self.data.s_language(), "after_restart"), self)
-    
+
         HorizontalLayoutB = QHBoxLayout()
         VerticalLayoutCS = QVBoxLayout()
 
@@ -85,7 +80,7 @@ class Settings(QMainWindow):
         VerticalLayoutCS.addWidget(self.text3)
         VerticalLayoutCS.addWidget(self.text8)
         VerticalLayoutCS.addWidget(self.text10)
-        VerticalLayoutCS.addWidget(self.text11) 
+        VerticalLayoutCS.addWidget(self.text11)
         VerticalLayoutCS.addWidget(self.text12)
         VerticalLayoutCS.addWidget(self.text13)
 
@@ -110,13 +105,13 @@ class Settings(QMainWindow):
 
         self.button1 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "save"), self)
         self.button1.clicked.connect(self.save_button)
-        
+
         self.button2 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "reset"), self)
         self.button2.clicked.connect(self.reset)
 
         self.exit_button = QPushButton(self.data.language_class.r_string(self.data.s_language(), "exit"), self)
         self.exit_button.clicked.connect(self.hide)
-        
+
         HorizontalLayoutC.addWidget(self.button1)
         HorizontalLayoutC.addWidget(self.button2)
         HorizontalLayoutC.addWidget(self.exit_button)
@@ -125,9 +120,9 @@ class Settings(QMainWindow):
         VerticalLayoutA.addWidget(self.textAllert)
         VerticalLayoutA.addLayout(HorizontalLayoutB)
         VerticalLayoutA.addLayout(HorizontalLayoutC)
-        
+
         myQWidget.setLayout(VerticalLayoutA)
-    
+
         self.textbox1.setText(str(self.data.DownloadFolderPath()))
         self.textbox2.setText(str(self.data.order_cycle_wait_time()))
         self.textbox3.setText(str(self.data.sep()))
@@ -159,18 +154,18 @@ class Settings(QMainWindow):
                 self.data.set_all(self.imp_pred.return_all())
 
             except Exception as ex:
-                self.data.debug_class.add(str(time.asctime( time.localtime(time.time()) )) + ": "+ self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
-                
+                self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+
             finally:
                 self.data.set_cont(True)
-                self.data.start_update(self.data.database_update_cycle_wait_time())   
+                self.data.start_update(self.data.database_update_cycle_wait_time())
                 self.data.save()
                 self.main.set_menu()
                 self.initUI()
 
     def set_data(self, data):
         self.data = data
-        
+
     def set_main(self, new):
         self.main = new
 
@@ -182,13 +177,13 @@ class Settings(QMainWindow):
         check.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         check = check.exec()
 
-        if check == QMessageBox.Yes: 
+        if check == QMessageBox.Yes:
             self.data.set_cont(False)
 
             try:
                 if self.textbox1.text() != self.data.DownloadFolderPath():
                     self.data.set_DownloadFolderPath(self.textbox1.text())
-                
+
                 if self.textbox3.text() != self.data.sep():
                     self.data.set_sep(self.textbox3.text())
 
@@ -197,25 +192,25 @@ class Settings(QMainWindow):
 
                 elif self.textbox4.text().lower() == "false":
                     self.data.set_clean_folder_path(False)
-                    
+
                 if self.textbox7.text().lower() == "true":
                     self.data.set_open_file_copied(True)
 
                 elif self.textbox7.text().lower() == "false":
                     self.data.set_open_file_copied(False)
-                    
+
                 if self.textbox8.text().lower() == "true":
                     self.data.set_create_folder(True)
 
                 elif self.textbox8.text().lower() == "false":
                     self.data.set_create_folder(False)
-                    
+
                 if self.textbox10.text().lower() == "true":
                     self.data.set_gui(True)
 
                 elif self.textbox10.text().lower() == "false":
                     self.data.set_gui(False)
-                
+
                 self.data.set_clean_time_difference(int(self.textbox5.text()))
                 self.data.set_clean_wait_time(int(self.textbox6.text()))
                 self.data.set_order_cycle_wait_time(int(self.textbox2.text()))
@@ -238,10 +233,10 @@ class Settings(QMainWindow):
                 close = close.exec()
 
                 if close == QMessageBox.Yes:
-                    self.hide() 
+                    self.hide()
 
             except Exception as ex:
-                self.data.debug_class.add(str(time.asctime( time.localtime(time.time()) )) + ": "+ self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+                self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
                 error_dialog = QErrorMessage()
                 error_dialog.setWindowIcon(self.icon)
                 error_dialog.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
@@ -249,9 +244,9 @@ class Settings(QMainWindow):
 
             finally:
                 self.data.set_cont(True)
-                self.data.start_update(self.data.database_update_cycle_wait_time())   
+                self.data.start_update(self.data.database_update_cycle_wait_time())
                 self.main.set_menu()
-        
+
     def closeEvent(self, event):
         self.hide()
         event.ignore()

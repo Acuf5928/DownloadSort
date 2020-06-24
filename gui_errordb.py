@@ -1,21 +1,22 @@
-import sys
 import shutil
+
 import PyQt5.QtWidgets as QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
+
 
 class Error_database():
-    def __init__(self, icon = None):
+    def __init__(self, icon=None):
         self.icon = icon
         self.app = QtWidgets.QApplication([])
 
     def spawn(self):
         check = QMessageBox()
-        
+
         if self.icon != None:
             check.setWindowIcon(self.icon)
 
         check.setWindowTitle("Error database")
-        
+
         check.setText("Database not found or corrupted, recreate with default settings?")
         check.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         check = check.exec()
@@ -29,7 +30,7 @@ class Error_database():
                 self.fatal_error()
         else:
             self.fatal_error()
-    
+
     def fatal_error(self):
         check = QMessageBox()
         check.setWindowTitle("Error database")

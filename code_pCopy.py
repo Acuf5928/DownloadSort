@@ -1,6 +1,6 @@
 import os
-import sys
 import subprocess
+import sys
 import time
 from shutil import copy, move
 
@@ -34,7 +34,7 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
                 checkFolder(destination)
                 data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "pcopy_1"))
             except Exception as ex:
-                data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "error_pcopy_3") + "\n" +str(ex), 1)
+                data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "error_pcopy_3") + "\n" + str(ex), 1)
         else:
             data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "error_pcopy_4"), 1)
             return
@@ -72,11 +72,15 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
 
     if not eliminateSource:
         copy(source, destinationPath)
-        data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(),"pcopy_5") + source + data.language_class.r_string(data.s_language(), "destination") + destinationPath)
+        data.debug_class.add(
+            str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "pcopy_5") + source + data.language_class.r_string(data.s_language(),
+                                                                                                                                                                       "destination") + destinationPath)
 
     else:
         move(source, destinationPath)
-        data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(),"pcopy_6") + source + data.language_class.r_string(data.s_language(), "destination") + destinationPath)
+        data.debug_class.add(
+            str(time.asctime(time.localtime(time.time()))) + ": " + data.language_class.r_string(data.s_language(), "pcopy_6") + source + data.language_class.r_string(data.s_language(),
+                                                                                                                                                                       "destination") + destinationPath)
 
     if openFile:
         try:

@@ -1,11 +1,13 @@
-from code_pCopy import pCopy
 import _thread
-import code_helper
 import os
 import time
-import win32file
-import win32event
+
 import win32con
+import win32event
+import win32file
+
+import code_helper
+from code_pCopy import pCopy
 
 
 class order:
@@ -25,7 +27,7 @@ class order:
         self.folderPath = os.path.abspath(self.data.DownloadFolderPath())
         self.change_handle = win32file.FindFirstChangeNotification(self.folderPath, 0, win32con.FILE_NOTIFY_CHANGE_FILE_NAME)
         self.folderPath += "\\"
-        
+
         try:
             while True:
                 result = win32event.WaitForSingleObject(self.change_handle, 500)
@@ -53,10 +55,14 @@ class order:
                                         # commentata perchè riddondante, già presente in pcopy
 
                                     except Exception as es:
-                                        self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(),"copy_error") + str(Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(self.folderPath + Type) + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
+                                        self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(), "copy_error") + str(
+                                            Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(self.folderPath + Type) + self.data.language_class.r_string(
+                                            self.data.s_language(), "error") + str(es), 1)
 
         except Exception as es:
-            self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(),"copy_error") + "\n" + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
+            self.data.debug_class.add(
+                str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(), "copy_error") + "\n" + self.data.language_class.r_string(
+                    self.data.s_language(), "error") + str(es), 1)
 
         finally:
             win32file.FindCloseChangeNotification(self.change_handle)
