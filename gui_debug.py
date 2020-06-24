@@ -61,7 +61,7 @@ class Debug(QMainWindow):
         self.data = data
 
     def error_select(self):
-        if self.checkbox.isChecked() == False:
+        if not self.checkbox.isChecked():
             self.view_error = False
         else:
             self.view_error = True
@@ -74,16 +74,16 @@ class Debug(QMainWindow):
                     ptrfile.write(element + "\n")
             QMessageBox.question(self, self.data.language_class.r_string(self.data.s_language(), "title"), self.data.language_class.r_string(self.data.s_language(), "save_complete"),
                                  QMessageBox.Cancel)
-            self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "export_file"))
+            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "export_file"))
 
         except Exception as ex:
-            self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "export_error") + str(ex), 1)
+            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "export_error") + str(ex), 1)
 
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getSaveFileName(self, self.data.language_class.r_string(self.data.s_language(), "debug"), "", "All files(*)", options=options)
-        return (fileName)
+        return fileName
 
     def update_rec(self, sec=5):
         while True:
@@ -94,11 +94,11 @@ class Debug(QMainWindow):
     def update(self):
         self.text1.clear()
         for item in self.data.debug_class.return_data().items():
-            if self.view_error == True and item[1] == 1:
+            if self.view_error and item[1] == 1:
                 self.text1.addItem(item[0])
                 self.index = 1
 
-            if self.view_error == False:
+            if not self.view_error:
                 self.text1.addItem(item[0])
                 self.index = 1
 
@@ -109,7 +109,7 @@ class Debug(QMainWindow):
             self.index = 0
 
     def clean(self):
-        self.data.debug_class.clean()
+        self.data.debug_class.Clean()
         self.update()
 
     def closeEvent(self, event):

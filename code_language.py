@@ -1,5 +1,5 @@
 import time
-
+import json
 
 class language:
     def __init__(self, language_file, data):
@@ -15,7 +15,7 @@ class language:
                 self.db = json.load(read_file)
 
         except Exception as ex:
-            self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "language_error") + str(ex), 1)
+            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "language_error") + str(ex), 1)
 
     def r_string(self, language, string):
 
@@ -24,7 +24,7 @@ class language:
 
         except Exception as es:
             try:
-                self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "language_error_2") + str(es), 1)
+                self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "language_error_2") + str(es), 1)
                 return self.db["eng"][string]
 
             except Exception as es:

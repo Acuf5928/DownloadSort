@@ -9,7 +9,7 @@ import code_startOneTime
 import gui_persoanlLineEdit
 
 
-class clean(QMainWindow):
+class Clean(QMainWindow):
     def __init__(self, icon):
         super().__init__()
         self.setWindowIcon(icon)
@@ -58,9 +58,7 @@ class clean(QMainWindow):
         self.data = data
 
     def start(self):
-        self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(),
-                                                                                                                            "cleanTrayIcon_message_debug") + ": path: " + self.textbox.text() + ": clean: " + str(
-            self.cb.isChecked()) + ": open: " + str(self.cb1.isChecked()))
+        self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon_message_debug") + ": path: " + self.textbox.text() + ": clean: " + str(self.cb.isChecked()) + ": open: " + str(self.cb1.isChecked()))
         code_startOneTime.startOneTime(self.textbox.text(), self.cb.isChecked(), self.cb1.isChecked())
         self.text2.setVisible(True)
         _thread.start_new_thread(self.c, ())

@@ -10,7 +10,7 @@ import code_helper
 from code_pCopy import pCopy
 
 
-class order:
+class Order:
     def __init__(self, data):
         self.data = data
 
@@ -55,14 +55,10 @@ class order:
                                         # commentata perchè riddondante, già presente in pcopy
 
                                     except Exception as es:
-                                        self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(), "copy_error") + str(
-                                            Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(self.folderPath + Type) + self.data.language_class.r_string(
-                                            self.data.s_language(), "error") + str(es), 1)
+                                        self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "copy_error") + str(Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(self.folderPath + Type) + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
 
         except Exception as es:
-            self.data.debug_class.add(
-                str(time.asctime(time.localtime(time.time()))) + ":" + self.data.language_class.r_string(self.data.s_language(), "copy_error") + "\n" + self.data.language_class.r_string(
-                    self.data.s_language(), "error") + str(es), 1)
+            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "copy_error") + "\n" + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
 
         finally:
             win32file.FindCloseChangeNotification(self.change_handle)

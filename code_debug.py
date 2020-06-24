@@ -2,13 +2,13 @@ import _thread
 import time
 
 
-class debug:
+class Debug:
     def __init__(self, debug_clean_time, debug_clean_element):
         self.data = {}
         _thread.start_new_thread(self.update, (debug_clean_time, debug_clean_element))
 
     def add(self, string, value=0):
-        self.data.update({str(string): value})
+        self.data.update({str(time.asctime(time.localtime(time.time()))) + ": " + str(string): value})
 
     def return_data(self):
         return self.data

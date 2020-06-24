@@ -149,12 +149,12 @@ class Settings(QMainWindow):
         if check == QMessageBox.Yes:
             try:
                 self.data.set_cont(False)
-                self.imp_pred = code_data.data("db_general_defaulf.json")
+                self.imp_pred = code_data.Data("db_general_defaulf.json")
                 self.imp_pred.update(0)
                 self.data.set_all(self.imp_pred.return_all())
 
             except Exception as ex:
-                self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+                self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
 
             finally:
                 self.data.set_cont(True)
@@ -236,7 +236,7 @@ class Settings(QMainWindow):
                     self.hide()
 
             except Exception as ex:
-                self.data.debug_class.add(str(time.asctime(time.localtime(time.time()))) + ": " + self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+                self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
                 error_dialog = QErrorMessage()
                 error_dialog.setWindowIcon(self.icon)
                 error_dialog.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))

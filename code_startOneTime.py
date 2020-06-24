@@ -4,8 +4,8 @@ import os
 
 def startOneTime(path, clean, openF):
     from code_clean import start as clean_download_folder
-    from code_order import order
-    from code_data import data as db
+    from code_order import Order
+    from code_data import Data as db
 
     if os.path.isdir(path):
         try:
@@ -17,13 +17,13 @@ def startOneTime(path, clean, openF):
 
             data = db(db="db_general.json")
 
-            if clean == True:
+            if clean:
                 folder_to_clean = path
                 time_difference = data.clean_time_difference()
                 clean_download_folder(folder_to_clean + "**", time_difference, data)
 
             # avvio la pulizia
-            order = order(data)
+            order = Order(data)
             order.set_folderPath(path)
             order.set_openFile(openF)
             order.start()

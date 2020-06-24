@@ -43,11 +43,11 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.setContextMenu(self.menu)
 
     def set_pause(self):
-        if self.data.order() == True:
+        if self.data.Order() == True:
             self.data.set_order(False)
             self.pause.setText(self.data.language_class.r_string(self.data.s_language(), "pause"))
 
-        elif self.data.order() == False:
+        elif self.data.Order() == False:
             self.data.set_order(True)
             self.pause.setText(self.data.language_class.r_string(self.data.s_language(), "resume"))
 
@@ -65,7 +65,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.window.show()
 
     def cleanOneTime(self):
-        self.window = gui_cleanOneTime.clean(self.icon)
+        self.window = gui_cleanOneTime.Clean(self.icon)
         self.window.set_data(self.data)
         self.window.initUI()
         self.window.show()
