@@ -13,6 +13,7 @@ class Debug(QMainWindow):
         self.setMinimumSize(QSize(700, 400))
         self.setMaximumSize(QSize(700, 400))
         self.index = 0
+        self.ContinueRefresh = True
         self.view_error = False
 
     def initUI(self):
@@ -35,7 +36,7 @@ class Debug(QMainWindow):
         self.button3.clicked.connect(self.save)
 
         self.exit_button = QPushButton(self.data.language_class.r_string(self.data.s_language(), "exit"), self)
-        self.exit_button.clicked.connect(self.hide)
+        self.exit_button.clicked.connect(self.closeEvent)
 
         # Creo i diversi layout
         myQWidget = QWidget()
@@ -65,6 +66,9 @@ class Debug(QMainWindow):
             self.view_error = False
         else:
             self.view_error = True
+
+        self.index = 0
+        self.text1.clear()
         self.update()
 
     def save(self):
@@ -72,8 +76,12 @@ class Debug(QMainWindow):
             with open(self.saveFileDialog(), "a") as ptrfile:
                 for element in self.data.debug_class.return_data():
                     ptrfile.write(element + "\n")
-            QMessageBox.question(self, self.data.language_class.r_string(self.data.s_language(), "title"), self.data.language_class.r_string(self.data.s_language(), "save_complete"),
-                                 QMessageBox.Cancel)
+            QMessageBox.question(
+                self,
+                self.data.language_class.r_string(self.data.s_language(), "title"),
+                self.data.language_class.r_string(self.data.s_language(), "save_complete"),
+                QMessageBox.Cancel)
+
             self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "export_file"))
 
         except Exception as ex:
@@ -86,32 +94,41 @@ class Debug(QMainWindow):
         return fileName
 
     def update_rec(self, sec=5):
-        while True:
+        self.index = 0
+
+        while self.ContinueRefresh:
             self.update()
             time.sleep(sec)
 
-    # to-do: optimize
     def update(self):
-        self.text1.clear()
+        tempIndex = 0
         for item in self.data.debug_class.return_data().items():
-            if self.view_error and item[1] == 1:
-                self.text1.addItem(item[0])
-                self.index = 1
+            if tempIndex == self.index:
+                if self.view_error and item[1] == 1:
+                    self.text1.addItem(item[0])
+                    self.index += 1
 
-            if not self.view_error:
-                self.text1.addItem(item[0])
-                self.index = 1
+                if not self.view_error:
+                    self.text1.addItem(item[0])
+                    self.index += 1
+
+            tempIndex += 1
 
         if self.index == 0:
+            self.text1.clear()
             self.text1.addItem(self.data.language_class.r_string(self.data.s_language(), "no_element"))
 
-        else:
-            self.index = 0
-
     def clean(self):
-        self.data.debug_class.Clean()
+        self.index = 0
+        self.text1.clear()
+        self.data.debug_class.clean()
         self.update()
 
     def closeEvent(self, event):
+        self.ContinueRefresh = False
         self.hide()
-        event.ignore()
+
+        try:
+            event.ignore()
+        except:
+            pass
