@@ -4,7 +4,7 @@ import PyQt5.QtWidgets as QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 
-class Error_database():
+class ErrorDatabase():
     def __init__(self, icon=None):
         self.icon = icon
         self.app = QtWidgets.QApplication([])
@@ -12,7 +12,7 @@ class Error_database():
     def spawn(self):
         check = QMessageBox()
 
-        if self.icon != None:
+        if self.icon is not None:
             check.setWindowIcon(self.icon)
 
         check.setWindowTitle("Error database")
@@ -23,7 +23,7 @@ class Error_database():
 
         if check == QMessageBox.Yes:
             try:
-                shutil.copy("db_general_defaulf.json", "db_general.json")
+                shutil.copy("..\\resources\\db_general_defaulf.json", "..\\resources\\db_general.json")
                 return True
             except Exception as Ex:
                 print(Ex)

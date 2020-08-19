@@ -4,7 +4,7 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QHBoxLayout, QLabel,
                              QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QWidget, QErrorMessage, QMessageBox)
 
-import code_data
+from code import code_data
 
 
 class Settings(QMainWindow):
@@ -16,7 +16,7 @@ class Settings(QMainWindow):
         self.setMaximumSize(QSize(500, 500))
 
     def initUI(self):
-        self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
+        self.setWindowTitle(self.data.languageClass.rString("settings"))
 
         # Creo i diversi layout
         myQWidget = QWidget()
@@ -66,7 +66,7 @@ class Settings(QMainWindow):
         HorizontalLayoutA.addLayout(VerticalLayoutBS)
         HorizontalLayoutA.addLayout(VerticalLayoutBD)
 
-        self.textAllert = QLabel(self.data.language_class.r_string(self.data.s_language(), "after_restart"), self)
+        self.textAllert = QLabel(self.data.languageClass.rString("after_restart"), self)
 
         HorizontalLayoutB = QHBoxLayout()
         VerticalLayoutCS = QVBoxLayout()
@@ -103,13 +103,13 @@ class Settings(QMainWindow):
 
         HorizontalLayoutC = QHBoxLayout()
 
-        self.button1 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "save"), self)
+        self.button1 = QPushButton(self.data.languageClass.rString("save"), self)
         self.button1.clicked.connect(self.save_button)
 
-        self.button2 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "reset"), self)
+        self.button2 = QPushButton(self.data.languageClass.rString("reset"), self)
         self.button2.clicked.connect(self.reset)
 
-        self.exit_button = QPushButton(self.data.language_class.r_string(self.data.s_language(), "exit"), self)
+        self.exit_button = QPushButton(self.data.languageClass.rString("exit"), self)
         self.exit_button.clicked.connect(self.hide)
 
         HorizontalLayoutC.addWidget(self.button1)
@@ -141,20 +141,20 @@ class Settings(QMainWindow):
     def reset(self):
         check = QMessageBox()
         check.setWindowIcon(self.icon)
-        check.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
-        check.setText(self.data.language_class.r_string(self.data.s_language(), "cont"))
+        check.setWindowTitle(self.data.languageClass.rString("settings"))
+        check.setText(self.data.languageClass.rString("cont"))
         check.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         check = check.exec()
 
         if check == QMessageBox.Yes:
             try:
                 self.data.set_cont(False)
-                self.imp_pred = code_data.Data("db_general_defaulf.json")
+                self.imp_pred = code_data.Data("..\\resources\\db_general_defaulf.json")
                 self.imp_pred.update(0)
                 self.data.set_all(self.imp_pred.return_all())
 
             except Exception as ex:
-                self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+                self.data.debug_class.add(self.data.languageClass.rString("db_error") + str(ex), 1)
 
             finally:
                 self.data.set_cont(True)
@@ -172,8 +172,8 @@ class Settings(QMainWindow):
     def save_button(self):
         check = QMessageBox()
         check.setWindowIcon(self.icon)
-        check.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
-        check.setText(self.data.language_class.r_string(self.data.s_language(), "cont2"))
+        check.setWindowTitle(self.data.languageClass.rString("settings"))
+        check.setText(self.data.languageClass.rString("cont2"))
         check.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         check = check.exec()
 
@@ -220,15 +220,15 @@ class Settings(QMainWindow):
                 self.data.set_debug_clean_element(int(self.textbox13.text()))
                 self.data.set_language(str(self.textbox14.text()))
                 self.data.save()
-                self.textAllert.setText(self.data.language_class.r_string(self.data.s_language(), "after_restart"))
-                self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
-                self.button1.setText(self.data.language_class.r_string(self.data.s_language(), "save"))
-                self.button2.setText(self.data.language_class.r_string(self.data.s_language(), "reset"))
-                self.exit_button.setText(self.data.language_class.r_string(self.data.s_language(), "exit"))
+                self.textAllert.setText(self.data.languageClass.rString("after_restart"))
+                self.setWindowTitle(self.data.languageClass.rString("settings"))
+                self.button1.setText(self.data.languageClass.rString("save"))
+                self.button2.setText(self.data.languageClass.rString("reset"))
+                self.exit_button.setText(self.data.languageClass.rString("exit"))
                 close = QMessageBox()
                 close.setWindowIcon(self.icon)
-                close.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
-                close.setText(self.data.language_class.r_string(self.data.s_language(), "save_complete_2"))
+                close.setWindowTitle(self.data.languageClass.rString("settings"))
+                close.setText(self.data.languageClass.rString("save_complete_2"))
                 close.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
                 close = close.exec()
 
@@ -236,10 +236,10 @@ class Settings(QMainWindow):
                     self.hide()
 
             except Exception as ex:
-                self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "db_error") + str(ex), 1)
+                self.data.debug_class.add(self.data.languageClass.rString("db_error") + str(ex), 1)
                 error_dialog = QErrorMessage()
                 error_dialog.setWindowIcon(self.icon)
-                error_dialog.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "settings"))
+                error_dialog.setWindowTitle(self.data.languageClass.rString("settings"))
                 error_dialog.showMessage(str(ex))
 
             finally:

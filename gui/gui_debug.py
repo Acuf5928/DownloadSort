@@ -17,25 +17,25 @@ class Debug(QMainWindow):
         self.view_error = False
 
     def initUI(self):
-        self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "debug"))
+        self.setWindowTitle(self.data.languageClass.rString("debug"))
 
         # Creo i campi di testo
         self.text1 = QListWidget()
 
-        self.checkbox = QCheckBox((self.data.language_class.r_string(self.data.s_language(), "view_only_error")), self)
+        self.checkbox = QCheckBox((self.data.languageClass.rString("view_only_error")), self)
         self.checkbox.stateChanged.connect(self.error_select)
 
         # Setup OK button
-        self.button1 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "clean"), self)
+        self.button1 = QPushButton(self.data.languageClass.rString("clean"), self)
         self.button1.clicked.connect(self.clean)
 
-        self.button2 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "update"), self)
+        self.button2 = QPushButton(self.data.languageClass.rString("update"), self)
         self.button2.clicked.connect(self.update)
 
-        self.button3 = QPushButton(self.data.language_class.r_string(self.data.s_language(), "save_on_file"), self)
+        self.button3 = QPushButton(self.data.languageClass.rString("save_on_file"), self)
         self.button3.clicked.connect(self.save)
 
-        self.exit_button = QPushButton(self.data.language_class.r_string(self.data.s_language(), "exit"), self)
+        self.exit_button = QPushButton(self.data.languageClass.rString("exit"), self)
         self.exit_button.clicked.connect(self.closeEvent)
 
         # Creo i diversi layout
@@ -78,19 +78,19 @@ class Debug(QMainWindow):
                     ptrfile.write(element + "\n")
             QMessageBox.question(
                 self,
-                self.data.language_class.r_string(self.data.s_language(), "title"),
-                self.data.language_class.r_string(self.data.s_language(), "save_complete"),
+                self.data.languageClass.rString("title"),
+                self.data.languageClass.rString("save_complete"),
                 QMessageBox.Cancel)
 
-            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "export_file"))
+            self.data.debug_class.add(self.data.languageClass.rString("export_file"))
 
         except Exception as ex:
-            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "export_error") + str(ex), 1)
+            self.data.debug_class.add(self.data.languageClass.rString("export_error") + str(ex), 1)
 
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self, self.data.language_class.r_string(self.data.s_language(), "debug"), "", "All files(*)", options=options)
+        fileName, _ = QFileDialog.getSaveFileName(self, self.data.languageClass.rString("debug"), "", "All files(*)", options=options)
         return fileName
 
     def update_rec(self, sec=5):
@@ -116,7 +116,7 @@ class Debug(QMainWindow):
 
         if self.index == 0:
             self.text1.clear()
-            self.text1.addItem(self.data.language_class.r_string(self.data.s_language(), "no_element"))
+            self.text1.addItem(self.data.languageClass.rString("no_element"))
 
     def clean(self):
         self.index = 0

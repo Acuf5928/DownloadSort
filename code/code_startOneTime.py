@@ -3,9 +3,9 @@ import os
 
 
 def startOneTime(path, clean, openF):
-    from code_clean import start as clean_download_folder
-    from code_order import Order
-    from code_data import Data as db
+    from code.code_order import Order
+    from code.code_clean import start as clean_download_folder
+    from code.code_data import Data as db
 
     if os.path.isdir(path):
         try:

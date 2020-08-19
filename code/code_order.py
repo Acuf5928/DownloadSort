@@ -1,13 +1,12 @@
 import _thread
 import os
-import time
 
 import win32con
 import win32event
 import win32file
 
 import code_helper
-from code_pCopy import pCopy
+from code.code_pCopy import pCopy
 
 
 class Order:
@@ -37,7 +36,7 @@ class Order:
                     self.start()
 
         except Exception as es:
-            self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "copy_error") + "\n" + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
+            self.data.debug_class.add(self.data.languageClass.rString("copy_error") + "\n" + self.data.languageClass.rString("error") + str(es), 1)
 
         finally:
             win32file.FindCloseChangeNotification(self.change_handle)
@@ -60,10 +59,10 @@ class Order:
                     if Element.lower().endswith(ext):
                         try:
                             pCopy(self.folderPath + Type, Element, self.data, self.data.create_folder(), self.open_file_copied)
-                            # self.data.debug_class.add(str(time.asctime(self.data.language_class.r_string(self.data.s_language(), "copy_file") + str(Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(folderPath + Type))
+                            # self.data.debug_class.add(str(time.asctime(self.data.languageClass.rString("copy_file") + str(Element) + "\n" + self.data.languageClass.rString("dst") + str(folderPath + Type))
                             # commentata perchè riddondante, già presente in pcopy
 
                         except Exception as es:
                             self.data.debug_class.add(
-                                self.data.language_class.r_string(self.data.s_language(), "copy_error") + str(Element) + "\n" + self.data.language_class.r_string(self.data.s_language(), "dst") + str(
-                                    self.folderPath + Type) + self.data.language_class.r_string(self.data.s_language(), "error") + str(es), 1)
+                                self.data.languageClass.rString("copy_error") + str(Element) + "\n" + self.data.languageClass.rString("dst") + str(
+                                    self.folderPath + Type) + self.data.languageClass.rString("error") + str(es), 1)

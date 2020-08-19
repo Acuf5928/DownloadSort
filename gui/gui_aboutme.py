@@ -11,7 +11,7 @@ class AboutMe(QMainWindow):
         self.setMaximumSize(QSize(950, 250))
 
     def initUI(self):
-        self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "aboutme"))
+        self.setWindowTitle(self.data.languageClass.rString("aboutme"))
 
         # Creo i diversi layout
         myQWidget = QWidget()

@@ -37,7 +37,7 @@ def aprifile(percorso):
     try:
         with open(percorso, "r") as ptrfile:
             settings = ptrfile.readlines()
-            return (settings)
+            return settings
 
     except:
         print("File non trovato")
@@ -59,7 +59,7 @@ def scrivifile(text, percorso):
 # cartelle se folder è inpostato su True
 # anche le sottocartelle se recursivee è su True e il path dato contiene con **
 def list_file(folderPath, recursivee=False, folder=False):
-    if folder == False:
+    if not folder:
         return glob(folderPath + ".*", recursive=recursivee)
     else:
         return glob(folderPath, recursive=recursivee)

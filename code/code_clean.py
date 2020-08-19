@@ -28,20 +28,20 @@ def start(folder_to_clean, time_difference, data):
         try:
             diff = time_now - code_helper.creation_date(file)
         except Exception as es:
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "clean_diff_error") + str(es), 1)
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "clean_diff_error") + str(es), 1)
             break
 
         if diff > time_difference:
             # se la differenza supera il limite si prova a rimuovere il file
             try:
                 os.remove(file)
-                data.debug_class.add(data.language_class.r_string(data.s_language(), "clean_file_removed") + str(file))
+                data.debug_class.add(data.languageClass.rString(data.s_language(), "clean_file_removed") + str(file))
 
             except Exception:
                 # se fallisce provo ad agire come fosse una cartella
                 try:
                     os.rmdir(file)
-                    data.debug_class.add(data.language_class.r_string(data.s_language(), "clean_folder_removed") + str(file))
+                    data.debug_class.add(data.languageClass.rString(data.s_language(), "clean_folder_removed") + str(file))
 
                 except Exception:
                     pass

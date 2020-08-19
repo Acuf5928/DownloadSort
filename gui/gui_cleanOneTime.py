@@ -5,8 +5,8 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QCheckBox, QHBoxLayout, QLabel,
                              QMainWindow, QPushButton, QVBoxLayout, QWidget)
 
-import code_startOneTime
-import gui_persoanlLineEdit
+from code import code_startOneTime
+from gui import gui_persoanlLineEdit
 
 
 class Clean(QMainWindow):
@@ -17,7 +17,7 @@ class Clean(QMainWindow):
         self.setMaximumSize(QSize(600, 100))
 
     def initUI(self):
-        self.setWindowTitle(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon"))
+        self.setWindowTitle(self.data.languageClass.rString("cleanTrayIcon"))
 
         # Create textbox
         self.textbox = gui_persoanlLineEdit.LineEdit(self)
@@ -25,15 +25,15 @@ class Clean(QMainWindow):
         self.textbox.resize(480, 30)
 
         # Create a button in the window
-        self.button = QPushButton(self.data.language_class.r_string(self.data.s_language(), "start"), self)
+        self.button = QPushButton(self.data.languageClass.rString("start"), self)
         self.button.clicked.connect(self.start)
 
-        self.cb = QCheckBox(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon_message_1"), self)
-        self.cb1 = QCheckBox(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon_message_2"), self)
+        self.cb = QCheckBox(self.data.languageClass.rString("cleanTrayIcon_message_1"), self)
+        self.cb1 = QCheckBox(self.data.languageClass.rString("cleanTrayIcon_message_2"), self)
 
-        self.text = QLabel(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon_message"), self)
+        self.text = QLabel(self.data.languageClass.rString("cleanTrayIcon_message"), self)
 
-        self.text2 = QLabel(self.data.language_class.r_string(self.data.s_language(), "ok"), self)
+        self.text2 = QLabel(self.data.languageClass.rString("ok"), self)
         self.text2.setVisible(False)
 
         VerticalLayout = QVBoxLayout()
@@ -58,7 +58,7 @@ class Clean(QMainWindow):
         self.data = data
 
     def start(self):
-        self.data.debug_class.add(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon_message_debug") + ": path: " + self.textbox.text() + ": clean: " + str(self.cb.isChecked()) + ": open: " + str(self.cb1.isChecked()))
+        self.data.debug_class.add(self.data.languageClass.rString("cleanTrayIcon_message_debug") + ": path: " + self.textbox.text() + ": clean: " + str(self.cb.isChecked()) + ": open: " + str(self.cb1.isChecked()))
         code_startOneTime.startOneTime(self.textbox.text(), self.cb.isChecked(), self.cb1.isChecked())
         self.text2.setVisible(True)
         _thread.start_new_thread(self.c, ())

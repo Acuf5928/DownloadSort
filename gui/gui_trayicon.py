@@ -4,10 +4,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QMenu)
 
-import gui_aboutme
-import gui_cleanOneTime
-import gui_debug
-import gui_settings
+from gui import gui_debug, gui_cleanOneTime, gui_aboutme, gui_settings
 
 
 class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
@@ -22,34 +19,34 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     def set_menu(self):
         self.menu.clear()
-        Debug = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "debug"))
+        Debug = self.menu.addAction(self.data.languageClass.rString("debug"))
         Debug.triggered.connect(self.debug)
 
-        settingAction = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "settings"))
+        settingAction = self.menu.addAction(self.data.languageClass.rString("settings"))
         settingAction.triggered.connect(self.settings)
 
-        cleanOneTime = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "cleanTrayIcon"))
+        cleanOneTime = self.menu.addAction(self.data.languageClass.rString("cleanTrayIcon"))
         cleanOneTime.triggered.connect(self.cleanOneTime)
 
-        self.pause = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "pause"))
+        self.pause = self.menu.addAction(self.data.languageClass.rString("pause"))
         self.pause.triggered.connect(self.set_pause)
 
-        aboutme = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "aboutme"))
+        aboutme = self.menu.addAction(self.data.languageClass.rString("aboutme"))
         aboutme.triggered.connect(self.aboutme)
 
-        exitAction = self.menu.addAction(self.data.language_class.r_string(self.data.s_language(), "exit"))
+        exitAction = self.menu.addAction(self.data.languageClass.rString("exit"))
         exitAction.triggered.connect(self.exit)
 
         self.setContextMenu(self.menu)
 
     def set_pause(self):
-        if self.data.Order() == True:
+        if self.data.Order():
             self.data.set_order(False)
-            self.pause.setText(self.data.language_class.r_string(self.data.s_language(), "pause"))
+            self.pause.setText(self.data.languageClass.rString("pause"))
 
-        elif self.data.Order() == False:
+        elif not self.data.Order():
             self.data.set_order(True)
-            self.pause.setText(self.data.language_class.r_string(self.data.s_language(), "resume"))
+            self.pause.setText(self.data.languageClass.rString("resume"))
 
     def debug(self):
         self.window = gui_debug.Debug(self.icon)

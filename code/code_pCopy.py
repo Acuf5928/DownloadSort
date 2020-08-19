@@ -1,7 +1,6 @@
 import os
 import subprocess
 import sys
-import time
 from shutil import copy, move
 
 
@@ -11,11 +10,11 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
     sep = os.sep
 
     if os.path.isfile(destination):
-        data.debug_class.add(data.language_class.r_string(data.s_language(), "error_pcopy_1"), 1)
+        data.debug_class.add(data.languageClass.rString(data.s_language(), "error_pcopy_1"), 1)
         return
 
     if not os.path.isfile(source):
-        data.debug_class.add(data.language_class.r_string(data.s_language(), "error_pcopy_2"), 1)
+        data.debug_class.add(data.languageClass.rString(data.s_language(), "error_pcopy_2"), 1)
         return
 
     if not os.path.exists(source):
@@ -32,11 +31,11 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
         if createFolder:
             try:
                 checkFolder(destination)
-                data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_1"))
+                data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_1"))
             except Exception as ex:
-                data.debug_class.add(data.language_class.r_string(data.s_language(), "error_pcopy_3") + "\n" + str(ex), 1)
+                data.debug_class.add(data.languageClass.rString(data.s_language(), "error_pcopy_3") + "\n" + str(ex), 1)
         else:
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "error_pcopy_4"), 1)
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "error_pcopy_4"), 1)
             return
 
     if destination[-1] != sep:
@@ -61,22 +60,22 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
             while os.path.exists(destinationPath):
                 n += 1
                 destinationPath = destination + name + "(" + str(n) + ")." + ext
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_2") + destinationPath)
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_2") + destinationPath)
 
         elif secureMode:
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_3"))
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_3"))
             return
 
         else:
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_4"))
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_4"))
 
     if not eliminateSource:
         copy(source, destinationPath)
-        data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_5") + source + data.language_class.r_string(data.s_language(), "destination") + destinationPath)
+        data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_5") + source + data.languageClass.rString(data.s_language(), "destination") + destinationPath)
 
     else:
         move(source, destinationPath)
-        data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_6") + source + data.language_class.r_string(data.s_language(), "destination") + destinationPath)
+        data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_6") + source + data.languageClass.rString(data.s_language(), "destination") + destinationPath)
 
     if openFile:
         try:
@@ -86,9 +85,9 @@ def pCopy(destination, source, data, createFolder=False, openFile=False, resolve
                 opener = "open" if sys.platform == "darwin" else "xdg-open"
                 subprocess.call([opener, destinationPath])
         except Exception as es:
-            data.debug_class.add(data.language_class.r_string(data.s_language(), "error_pcopy_5") + str(es), 1)
+            data.debug_class.add(data.languageClass.rString(data.s_language(), "error_pcopy_5") + str(es), 1)
 
-        data.debug_class.add(data.language_class.r_string(data.s_language(), "pcopy_7") + destinationPath)
+        data.debug_class.add(data.languageClass.rString(data.s_language(), "pcopy_7") + destinationPath)
 
     return destinationPath
 
